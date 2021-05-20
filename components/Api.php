@@ -12,8 +12,21 @@ class Api extends Component
     public function sendFailedResponse($message)
     {
         $this->setHeader(400);
-        return json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $message), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        // Yii::$app->end();
+        $response = [];
+        $response['status'] = 0;
+        $response['error_code'] = 400;
+        $response['message'] = $message;
+                
+        if (isset($_GET['callback'])) {
+            /* this is required for angularjs1.0 client factory API calls to work */
+            $response = $_GET['callback'] . "(" . $response . ")";
+            Yii::$app->response->data  =  $response;
+            return Yii::$app->response->data;
+        } else {
+            Yii::$app->response->data  =  $response;
+            return Yii::$app->response->data;
+        }
+        Yii::$app->end();
     }
     public function sendSuccessResponse($data = false,$additional_info = false)
     {
