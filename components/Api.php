@@ -12,7 +12,7 @@ class Api extends Component
     public function sendFailedResponse($message)
     {
         $this->setHeader(400);
-        echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $message));
+        echo json_encode(array('status' => 0, 'error_code' => 400, 'errors' => $message), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         Yii::$app->end();
     }
     public function sendSuccessResponse($data = false,$additional_info = false)

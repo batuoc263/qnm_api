@@ -110,7 +110,7 @@ class SiteController extends Controller
         $mail->Password = $param['password'];
 
         if ($mail->smtpConnect()) {
-            $data["message"] = "Authentication successful!";
+            $data = "Authentication successful!";
             Yii::$app->api->sendSuccessResponse($data);
         } else {
             $data["message"] = "Authentication failed! Incorrect username or password";
